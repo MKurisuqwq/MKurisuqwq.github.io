@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kurisu M">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="矩阵可以非常方便的描述一个向量&#x2F;变量的变化情况, DDP 就是基于(广义)矩阵乘法的结合律(tag 可合并)实现的。  DDP 一般解决较为简单的 DP 问题, 但是带修改的情况. 引入ABC246Ex 01? Queries 给定长度为 $N$ 的仅包含 0, 1, ? 的字符串 $S$, 给定 $Q$ 组询问 $(x_1,c_1),(x_2,c_2),\cdots,(x_q,c_q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态 DP">
+<meta property="og:url" content="https://mkurisuqwq.github.io/2025/05/29/DDP/index.html">
+<meta property="og:site_name" content="MKurisuqwq&#39;s Blog">
+<meta property="og:description" content="矩阵可以非常方便的描述一个向量&#x2F;变量的变化情况, DDP 就是基于(广义)矩阵乘法的结合律(tag 可合并)实现的。  DDP 一般解决较为简单的 DP 问题, 但是带修改的情况. 引入ABC246Ex 01? Queries 给定长度为 $N$ 的仅包含 0, 1, ? 的字符串 $S$, 给定 $Q$ 组询问 $(x_1,c_1),(x_2,c_2),\cdots,(x_q,c_q">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-29T12:24:17.000Z">
+<meta property="article:modified_time" content="2026-01-18T11:15:02.743Z">
+<meta property="article:author" content="Kurisu M">
+<meta property="article:tag" content="DP">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>动态 DP - MKurisuqwq&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mkurisuqwq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MKurisuqwq&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/86.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="动态 DP"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-29 20:24" pubdate>
+          2025年5月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">动态 DP</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>矩阵可以非常方便的描述一个向量&#x2F;变量的变化情况, DDP 就是基于(广义)矩阵乘法的结合律(tag 可合并)实现的。</p>
+</blockquote>
+<p>DDP 一般解决较为简单的 DP 问题, 但是带修改的情况.</p>
+<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc246_h">ABC246Ex 01? Queries</a></p>
+<p>给定长度为 $N$ 的仅包含 <code>0</code>, <code>1</code>, <code>?</code> 的字符串 $S$, 给定 $Q$ 组询问 $(x_1,c_1),(x_2,c_2),\cdots,(x_q,c_q)$, 每次将原字符串中 $x_i$ 位置的字符改为 $c_i$, 然后输出 $S$ 有多少种非空子序列, <code>?</code> 需任意替换为 <code>0</code> 或 <code>1</code>.</p>
+<p>如果不带修, 就可以直接 DP 了.</p>
+<p>那考虑带修改怎么做? 先将转移方程用矩阵表示:<br>$$<br>\mathbf S_{a_i} \begin{bmatrix}f_{i-1,0}\newline f_{i-1,1}\newline 1 \end{bmatrix} &#x3D; \begin{bmatrix} f_{i,0}\newline f_{i,1}\newline 1 \end{bmatrix}<br>$$<br>不难得到:<br>$$<br>\mathbf S_{\texttt{0}}&#x3D;<br>\begin{bmatrix}<br>1 &amp; 1 &amp; 1\newline<br>0 &amp; 1 &amp; 0\newline<br>0 &amp; 0 &amp; 1<br>\end{bmatrix},<br>\mathbf S_{\texttt{1}}&#x3D;<br>\begin{bmatrix}<br>1 &amp; 0 &amp; 0\newline<br>1 &amp; 1 &amp; 1\newline<br>0 &amp; 0 &amp; 1<br>\end{bmatrix},<br>\mathbf S_{\texttt{?}}&#x3D;<br>\begin{bmatrix}<br>1 &amp; 1 &amp; 1\newline<br>1 &amp; 1 &amp; 1\newline<br>0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>$$</p>
+<p>由于矩阵乘法具有结合律, 可以用线段树维护, 修改时直接修改对应位置的转移矩阵即可。</p>
+<h3 id="广义矩阵乘法"><a href="#广义矩阵乘法" class="headerlink" title="广义矩阵乘法"></a>广义矩阵乘法</h3><p>大部分情况下, 状态转移方程会不可避免的带有 $\min&#x2F;\max$, 此时一般的矩阵乘法无法刻画转移过程, 我们引入广义矩阵乘法.</p>
+<p>广义矩阵乘法并不是某一种具体的运算, 它代表了一系列具有结合律的矩阵间的运算, 举例而言:</p>
+<p>定义两 $n$ 阶方阵间运算 $\mathbf A \otimes \mathbf B &#x3D; \mathbf C$:<br>$$<br>c_{ij} &#x3D; \max_{k &#x3D; 0} {a_{ik} + b_{kj}}<br>$$<br>不难发现运算 $\otimes$ (值得一提的是, 我们可以把 $\otimes$ 称作 $(\max, +)$ 规则下的矩阵乘法)具有结合律, 以抽象代数的语言表示的话, 即 $(\mathbf M_n, \otimes)$ 是一个幺半群(不难发现矩阵 $\begin{bmatrix}0 &amp; +\infty &amp;\cdots &amp; +\infty \newline +\infty &amp;0 &amp;\cdots &amp;+\infty\newline\vdots &amp;&amp; \ddots &amp;\vdots\newline +\infty &amp;\cdots &amp;&amp; 0\end{bmatrix}$​ 是它的幺元).</p>
+
+
+证明:
+
+由群论基本知识得到, 欲证明 $\otimes$ 具有结合律, 只需证明 $(\mathbf A \otimes \mathbf B) \otimes \mathbf C = \mathbf A \otimes (\mathbf B \otimes \mathbf C)$: 
+
+设 $\mathbf A \otimes \mathbf B = \mathbf D, \mathbf B \otimes \mathbf C = \mathbf E$​. 左为:
+$$
+\begin{aligned}
+\max_{k = 0}^n \{d_{ik} + c_{kj}\} &= \max_{k = 0}^n \left\{\max^n_{t = 0} \{a_{it} + b_{tk}\} + c_{kj} \right\}\newline
+&= \max^n_{k = 0} \left\{\max^n_{t = 0} \{a_{it} + b_{tk} + c_{kj}\} \right\}
+\end{aligned}
+$$
+同理对右边操作:
+$$
+\begin{aligned}
+\max_{k = 0}^n \{a_{ik} + e_{kj}\} &= \max_{k = 0}^n \left\{a_{ik} + \max^n_{t = 0} \{d_{kt} + c_{tj}\} \right\}\newline
+&= \max^n_{k = 0} \left\{\max^n_{t = 0} \{a_{ik} + b_{kt} + c_{tj}\} \right\}
+\end{aligned}
+$$
+那很容易就能发现两者等价了, 因此原问题得证.
+
+
+
+
+
+<blockquote>
+<p>进一步观察证明过程, 不难发现关键的一步成立对应的条件是 $+$ 对 $\max$ 具有分配律, 也就是$(\mathbb R, \max, +)$ 构成一个环. 那么进一步扩展得到结论: <strong>任何具有分配律的二则运算 $(\odot, \oplus)$ 规则下的矩阵乘法都满足结合律</strong>(也可以表述成: <strong>若 $(\mathbb R, \odot, \oplus)$ 构成一个环, 则 $(\odot, \oplus)$ 规则下的矩阵乘法 $(\mathbf M_n,\otimes)$ 构成一个半群</strong>). 举例来说: $(\min, \pm)$, $(\max, \pm)$, $(\land, \lor)$ 规则下的矩阵乘法都具有结合律.</p>
+</blockquote>
+<p>半群最大的好处在于可以利用线段树维护, 完成快速修改和快速计算, 因此 DDP 的代码一般来说都是广义矩阵乘法与线段树的结合.</p>
+<h3 id="P4719-【模板】动态-DP"><a href="#P4719-【模板】动态-DP" class="headerlink" title="P4719 【模板】动态 DP"></a>P4719 【模板】动态 DP</h3><blockquote>
+<p> DDP 最常用即为解决树上带修问题.</p>
+</blockquote>
+<p>求最大权独立集, 带修改.</p>
+<p>一般的最大权独立集是简单的: 设 $f_{i, 0&#x2F;1}$ 表示强制选&#x2F;不选 $i$ 号节点的答案, 转移有:<br>$$<br>\begin{aligned}<br>f_{i, 0} &amp;&#x3D; \sum\max{f_{v, 1}, f_{v, 0}} \newline<br>f_{i, 1} &amp;&#x3D; w_i + \sum f_{v, 0}<br>\end{aligned}<br>$$<br>修改让我们想到树链剖分, 但是线段树维护树链时重儿子和轻儿子的转移应当是不同的, 套路是设 $g_{i, 0&#x2F;1}$ 强制选&#x2F;不选节点 $i$, 并且只考虑 $i$ 的轻儿子的结果, 转移有:<br>$$<br>\begin{aligned}<br>f_{i, 0} &amp;&#x3D; g_{i, 0} + \max{f_{v, 1}, f_{v, 0}} \newline<br>f_{i, 1} &amp;&#x3D; g_{i, 1} + w_i + f_{v, 0}<br>\end{aligned}<br>$$<br>写作矩阵乘法:<br>$$<br>\begin{bmatrix}g_{i, 0} &amp; g_{i, 0} \newline g_{i, 1} &amp; -\infty \end{bmatrix}<br>\begin{bmatrix}f_{j, 0} \newline f_{j, 1} \end{bmatrix} &#x3D; \begin{bmatrix}f_{i, 0} \newline f_{i, 1} \end{bmatrix}<br>$$<br>提前预处理 $g$, 修改时差分保证复杂度即可.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/DP/" class="print-no-link">#DP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>动态 DP</div>
+      <div>https://mkurisuqwq.github.io/2025/05/29/DDP/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kurisu M</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/29/VirtualTree/" title="虚树">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">虚树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/27/TrickInABC/" title="ABC Trick 整理">
+                        <span class="hidden-mobile">ABC Trick 整理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

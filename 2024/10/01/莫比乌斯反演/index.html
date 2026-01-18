@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kurisu M">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前置芝士：数论函数。 狄利克雷卷积定义两个数论函数的狄利克雷卷积为：$$(f * g)(n) &#x3D; \sum_{d \mid n} f(n) g!\left(\dfrac{n}{d}\right)$$经过观察我们可以发现狄利克雷卷积满足交换律，结合律，分配律。 单位元单位函数满足 $(f * \varepsilon)(n) &#x3D; f(n)$，我们称他是狄利克雷函数中的单位元，可以证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="莫比乌斯反演">
+<meta property="og:url" content="https://mkurisuqwq.github.io/2024/10/01/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/index.html">
+<meta property="og:site_name" content="MKurisuqwq&#39;s Blog">
+<meta property="og:description" content="前置芝士：数论函数。 狄利克雷卷积定义两个数论函数的狄利克雷卷积为：$$(f * g)(n) &#x3D; \sum_{d \mid n} f(n) g!\left(\dfrac{n}{d}\right)$$经过观察我们可以发现狄利克雷卷积满足交换律，结合律，分配律。 单位元单位函数满足 $(f * \varepsilon)(n) &#x3D; f(n)$，我们称他是狄利克雷函数中的单位元，可以证">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-01T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-18T11:15:02.746Z">
+<meta property="article:author" content="Kurisu M">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="数论">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>莫比乌斯反演 - MKurisuqwq&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mkurisuqwq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MKurisuqwq&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/86.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="莫比乌斯反演"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-01 12:00" pubdate>
+          2024年10月1日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">莫比乌斯反演</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>前置芝士：数论函数。</p>
+<h1 id="狄利克雷卷积"><a href="#狄利克雷卷积" class="headerlink" title="狄利克雷卷积"></a>狄利克雷卷积</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>两个数论函数的狄利克雷卷积为：<br>$$<br>(f * g)(n) &#x3D; \sum_{d \mid n} f(n) g!\left(\dfrac{n}{d}\right)<br>$$<br>经过观察我们可以发现狄利克雷卷积满足交换律，结合律，分配律。</p>
+<h2 id="单位元"><a href="#单位元" class="headerlink" title="单位元"></a>单位元</h2><p>单位函数满足 $(f * \varepsilon)(n) &#x3D; f(n)$，我们称他是狄利克雷函数中的单位元，可以证明：<br>$$<br>\varepsilon &#x3D; \mu * \mathbf 1<br>$$<br>证明：<br>$$<br>(f * \varepsilon)(n) &#x3D; \sum_{d \mid n} f(d) \varepsilon !<br>\left(\dfrac{n}{d}\right) &#x3D; \sum_{d \mid n} f(d) \left[\dfrac{n}{d} &#x3D; 1\right]<br>$$<br>根据莫比乌斯函数的性质，得到 $\varepsilon &#x3D; \mu * \mathbf1$。</p>
+<h2 id="结合数论函数"><a href="#结合数论函数" class="headerlink" title="结合数论函数"></a>结合数论函数</h2><ul>
+<li><p>除数函数与幂函数满足 $1 * \operatorname{Id}_k &#x3D; \sigma_k$。特别的，当 $k &#x3D; 0$ 时，有 $\operatorname{Id}_0 &#x3D; 1$，也就是说 $1 * 1 &#x3D; \sigma_0$。</p>
+</li>
+<li><p>欧拉函数与恒等函数满足 $\varphi * 1 &#x3D; \operatorname{Id}_1$。证明：</p>
+</li>
+</ul>
+<p>首先考虑特殊情况，$n &#x3D; p^m$，那么有：<br>$$<br>  \begin{align}<br>  (\varphi * \mathbf1)(p^m) &amp; &#x3D; \sum_{d \mid n} \varphi(d)\newline<br>  &amp; &#x3D; \varphi(1) + \sum_{k &#x3D; 1}^m \varphi(p^k)\newline<br>  &amp; &#x3D; 1 + \sum_{k &#x3D; 1}^m p^k - p^{k - 1}\newline<br>  &amp; &#x3D; p^m<br>  \end{align}<br>$$<br>  因为 $\varphi * \mathbf1$ 是积性函数，根据唯一分解定理，对于任意正整数，都有：<br>$$<br>  \begin{align}<br>  (\varphi * \mathbf1)(n) &amp; &#x3D; \prod_{i &#x3D; 1}^k (\varphi * 1)(p_i^{c_i})\newline<br>  &amp; &#x3D; \prod_{i &#x3D; 1}^k p_i^{c_i}\newline<br>  &amp; &#x3D; n<br>  \end{align}<br>$$<br>  Q.E.D.</p>
+<ul>
+<li>结合上一条，有 $\varphi &#x3D; \operatorname{Id}_1 * \mu$。</li>
+</ul>
+<h2 id="逆元"><a href="#逆元" class="headerlink" title="逆元"></a>逆元</h2><p>如果有函数 $f, g$，满足 $f * g &#x3D; \varepsilon$，那么称 $g$ 是 $f$ 的狄利克雷逆元。</p>
+<h2 id="重要结论"><a href="#重要结论" class="headerlink" title="重要结论"></a>重要结论</h2><ol>
+<li><strong>两个积性函数的狄利克雷卷积是积性函数</strong></li>
+<li><strong>积性函数的狄利克雷逆元是积性函数</strong></li>
+</ol>
+<h1 id="数论分块"><a href="#数论分块" class="headerlink" title="数论分块"></a>数论分块</h1><h2 id="引理-1"><a href="#引理-1" class="headerlink" title="引理 1"></a>引理 1</h2><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>$$<br>\forall n \in \mathbb{N},<br>\left| \left{ \left\lfloor \dfrac{n}{d} \right\rfloor \mid d\in<br>\mathbb{N} \right} \right|<br>\le \left\lfloor 2 \sqrt n \right\rfloor<br>$$</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>当 $d \le \sqrt n$ 时，最坏情况下<br>$\left\lfloor \dfrac{n}{d} \right\rfloor$ 两两不同，共有 $\sqrt{n}$ 种情况；当 $d \gt \sqrt n$ 时，$\left\lfloor \dfrac{n}{d}\right\rfloor$最大为 $\sqrt n$，最坏情况下 $\left\lfloor \dfrac{n}{d} \right\rfloor$ 两两不同，共有 $\sqrt{n}$ 种情况。Q.E.D.</p>
+<p>数论分块主要用来快速求使得 $\left\lfloor \dfrac{n}{d} \right\rfloor$ 相同的区间的左右断点。</p>
+<h2 id="引理-2"><a href="#引理-2" class="headerlink" title="引理 2"></a>引理 2</h2><h3 id="结论-1"><a href="#结论-1" class="headerlink" title="结论"></a>结论</h3><p>$$<br>\left\lfloor \frac{\left\lfloor<br>\frac{a}{b}\right\rfloor}{c}\right\rfloor &#x3D; \left\lfloor<br>\frac{a}{bc}\right\rfloor<br>$$</p>
+<h3 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h3><p>有 $a &#x3D; nb + p \ (0 \le p \lt b)$，$n &#x3D; mc + q \ (0 \le q \lt c)$，易知 $n &#x3D; \left\lfloor \frac{a}{b}\right\rfloor, m &#x3D; \left\lfloor \frac{\left\lfloor \frac{a}{b}\right\rfloor}{c}\right\rfloor$。将右式代入左式：<br>$$<br>\begin{align}<br>a &amp; &#x3D; b(mc + q) + p\newline<br>&amp; &#x3D; m \cdot bc + bq + p<br>\end{align}<br>$$<br>不难发现 $0 \le bq + p \lt bc$，则 $m &#x3D; \left\lfloor \frac{a}{bc}\right\rfloor$，原式得证。</p>
+<h2 id="两个结论"><a href="#两个结论" class="headerlink" title="两个结论"></a>两个结论</h2><p>那么对于满足 $\left\lfloor \dfrac{n}{i} \right\rfloor &#x3D; \left\lfloor \dfrac{n}{r} \right\rfloor$ 的极大 $r$，满足：<br>$$<br>r &#x3D;<br>\left\lfloor \dfrac{n}{\left\lfloor \dfrac{n}{i} \right\rfloor}<br>\right\rfloor<br>$$<br>证明：</p>
+<p>首先有<br>$$<br>\begin{cases}<br>\left\lfloor \dfrac{n}{i} \right\rfloor \le \dfrac{n}{r} \newline<br>\dfrac{n}{r + 1} &lt; \left\lfloor \dfrac{n}{i} \right\rfloor<br>\end{cases}<br>$$<br>根据第一行：<br>$$<br>\left\lfloor \dfrac{n}{i} \right\rfloor \le \dfrac{n}{r}<br>\Rightarrow \dfrac{n}{\left\lfloor \dfrac{n}{i} \right\rfloor} \ge<br>\dfrac{n}{\dfrac{n}{r}}<br>\Rightarrow \dfrac{n}{\left\lfloor \dfrac{n}{i} \right\rfloor} \ge r<br>$$<br>根据第二行：<br>$$<br>\dfrac{n}{r + 1} \lt \left\lfloor \dfrac{n}{i} \right\rfloor<br>\Rightarrow \dfrac{n}{\left\lfloor \dfrac{n}{i} \right\rfloor} \lt<br>\dfrac{n}{\dfrac{n}{r + 1}}<br>\Rightarrow \dfrac{n}{\left\lfloor \dfrac{n}{i} \right\rfloor} \lt r + 1<br>$$<br>得到：<br>$$<br>r \le \dfrac{n}{\left\lfloor \dfrac{n}{i} \right\rfloor} \lt r + 1<br>$$<br>由于 $r \in \mathbb{Z}$，得到最大的 $r$<br>为：<br>$$<br>\left\lfloor \dfrac{n}{\left\lfloor \dfrac{n}{i} \right\rfloor}<br>\right\rfloor<br>$$<br>同理，我们不难得到那么对于满足 $\left\lceil \dfrac{n}{i} \right\rceil &#x3D; \left\lceil \dfrac{n}{l} \right\rceil$ 的极小 $l$，满足：<br>$$<br>l &#x3D;<br>\left\lceil \dfrac{n}{\left\lceil \dfrac{n}{i} \right\rceil}<br>\right\rceil<br>$$<br>数论分块就是将这些内容分为连续的 $[l, r]$<br>并统一计算答案，广泛运用于莫比乌斯反演中。根据引理，复杂度一般为 $\mathcal{O(\sqrt n)}$。</p>
+<h1 id="莫比乌斯反演"><a href="#莫比乌斯反演" class="headerlink" title="莫比乌斯反演"></a>莫比乌斯反演</h1><h2 id="结论-2"><a href="#结论-2" class="headerlink" title="结论"></a>结论</h2><p>若：<br>$$<br>f(n) &#x3D; (g * \mathbf1)(n) &#x3D; \sum_{d \mid n} g(d)<br>$$<br>那么有：<br>$$<br>g(n) &#x3D; (\mu * f)(n) &#x3D;\sum_{d \mid n} \mu(d) f !<br>\left(\dfrac{n}{d}\right)<br>$$</p>
+<h2 id="证明-2"><a href="#证明-2" class="headerlink" title="证明"></a>证明</h2><p>若：<br>$$<br>f &#x3D; g * \mathbf1<br>$$<br>那么：<br>$$<br>\mu * f &#x3D; \mu * g * \mathbf1 &#x3D; g * \varepsilon &#x3D; g<br>$$<br>Q.E.D.</p>
+<h2 id="常用结论"><a href="#常用结论" class="headerlink" title="常用结论"></a>常用结论</h2><p>$$<br>\sum_{i &#x3D; 1} ^ n \sum_{j &#x3D; 1} ^ m f(\gcd(i, j))<br>$$</p>
+<p>构造一个函数 $g$，满足 $f &#x3D; (g * 1)$，那么有：</p>
+<p>$$<br>\sum_{i &#x3D; 1} ^ n \sum_{j &#x3D; 1} ^ m \sum_{d \mid \gcd(i, j)} g(d)<br>$$</p>
+<p>注意到如果 $d \mid \gcd(i, j)$，那么 $d \mid i$ 且 $d \mid j$。因此我们调整求和顺序：</p>
+<p>$$<br>\sum_{d &#x3D; 1}^n g(d) \sum_{i &#x3D; 1} ^ n [d \mid i] \sum_{j &#x3D; 1} ^ m [d \mid j]<br>\Rightarrow<br>\sum_{d &#x3D; 1}^n g(d) \left\lfloor \dfrac{n}{d} \right\rfloor \left\lfloor \dfrac{m}{d} \right\rfloor<br>$$</p>
+<p>此时可以数论分块。</p>
+<h2 id="例-1"><a href="#例-1" class="headerlink" title="例 1"></a>例 1</h2><p>$$<br>\sum_{i &#x3D; 1}^n \sum_{i &#x3D; 1}^m \gcd(i, j)<br>$$</p>
+<p>可以发现他等价于：<br>$$<br>\begin{aligned}<br>&amp; \sum_{i &#x3D; 1}^n \sum_{i &#x3D; 1}^m \operatorname{Id}(\gcd(i, j)) \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1} ^ n \sum_{j &#x3D; 1} ^ m \sum_{d \mid \gcd(i, j)} \varphi(d) \newline<br>&#x3D; &amp; \sum_{d &#x3D; 1}^n \varphi(d) \left\lfloor \dfrac{n}{d} \right\rfloor \left\lfloor \dfrac{m}{d} \right\rfloor<br>\end{aligned}<br>$$</p>
+<p>还有一种方式：从求值改为枚举 $\gcd$：<br>$$<br>\begin{align}<br>&amp; \sum_{i &#x3D; 1}^n \sum_{i &#x3D; 1}^m \gcd(i, j) \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1}^n \sum_{i &#x3D; 1}^m \sum_{d \mid i, d \mid j} [\gcd(i, j) &#x3D; d] \cdot d \newline<br>&#x3D; &amp; \sum_{d &#x3D; 1}^n d \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \sum_{i &#x3D; 1}^{\left\lfloor \frac{m}{d} \right\rfloor} [\gcd(i, j) &#x3D; 1]<br>\end{align}<br>$$<br>右边的单独拿出来设为 $f(d)$：<br>$$<br>\begin{align}<br>f(d)&#x3D; &amp; \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \sum_{i &#x3D; 1}^{\left\lfloor \frac{m}{d} \right\rfloor} [\gcd(i, j) &#x3D; 1] \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \sum_{i &#x3D; 1}^{\left\lfloor \frac{m}{d} \right\rfloor} \sum_{t \mid i, t \mid j} \mu(t)\newline<br>&#x3D; &amp; \sum_{t &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \mu(t) \left\lfloor \dfrac{n}{dt} \right\rfloor \left\lfloor \dfrac{m}{dt} \right\rfloor<br>\end{align}<br>$$<br>注意：最后一步用到了一个小结论 $\left\lfloor \dfrac{\left\lfloor \dfrac{a}{b} \right\rfloor}{c} \right\rfloor &#x3D; \left\lfloor \dfrac{a}{bc} \right\rfloor$，数论分块中有写。$f$ 算出来之后再扔回去，并设 $T &#x3D; dt$：</p>
+<p>$$<br>\begin{align}<br>\sum_{d &#x3D; 1}^n d \cdot f(d) &#x3D; &amp; \sum_{d &#x3D; 1}^n d \sum_{t &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \mu(t) \left\lfloor \dfrac{n}{dt} \right\rfloor \left\lfloor \dfrac{m}{dt} \right\rfloor \newline<br>&#x3D; &amp; \sum_{T &#x3D; 1}^n \sum_{d \mid T} \mu\left(\frac{T}{d}\right) d \left\lfloor \dfrac{n}{T} \right\rfloor \left\lfloor \dfrac{m}{T} \right\rfloor\newline<br>&#x3D; &amp; \sum_{T &#x3D; 1}^n \left\lfloor \dfrac{n}{T} \right\rfloor \left\lfloor \dfrac{m}{T} \right\rfloor \sum_{d \mid T} \mu\left(\frac{T}{d}\right) d\newline<br>\end{align}<br>$$</p>
+<p>右边的东西就是 $\mu * \operatorname{Id}$，也就是 $\varphi$，不懂的可以看狄利克雷卷积。虽然这种方式不如之前的简洁，但是它运用了许多常用的 trick 富有教育意义。</p>
+<h2 id="例-2"><a href="#例-2" class="headerlink" title="例 2"></a>例 2</h2><p>$$<br>\begin{aligned}<br>&amp; \sum_{i &#x3D; 1}^n \sum_{i &#x3D; 1}^m [\gcd(i, j) &#x3D; 1] \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1}^n \sum_{i &#x3D; 1}^m \varepsilon(\gcd(i, j)) \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1} ^ n \sum_{j &#x3D; 1} ^ m \sum_{d \mid \gcd(i, j)} \mu(d) \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1} ^ n \sum_{j &#x3D; 1} ^ m \sum_{d \mid i, d \mid j} \mu(d) \newline<br>&#x3D; &amp; \sum_{d &#x3D; 1}^n \mu(d) \left\lfloor \dfrac{n}{d} \right\rfloor \left\lfloor \dfrac{m}{d} \right\rfloor<br>\end{aligned}<br>$$</p>
+<h3 id="常用技巧"><a href="#常用技巧" class="headerlink" title="常用技巧"></a>常用技巧</h3><ul>
+<li>尝试将求 $\gcd$ 变为枚举 $\gcd$，争取得到一个 $[\gcd(i, j) &#x3D; 1]$，然后莫反 $[\gcd(i, j) &#x3D; 1] &#x3D; \sum_{d \mid \gcd(i, j)} \mu(d)$ + 数论分块。</li>
+</ul>
+<h2 id="例题-ABC020D-LCM-Rush"><a href="#例题-ABC020D-LCM-Rush" class="headerlink" title="例题 [ABC020D] LCM Rush"></a>例题 [ABC020D] LCM Rush</h2><p>求：<br>$$<br>\sum_{i &#x3D; 1}^n \operatorname{lcm}(n, k)<br>$$<br>经典操作：<br>$$<br>\sum_{i &#x3D; 1}^n \dfrac{i k}{\gcd(i, k)} &#x3D; k \sum_{i &#x3D; 1}^n \dfrac{i}{\gcd(i, k)}<br>$$<br>再一次经典操作，枚举 $\gcd$：<br>$$<br>\begin{align}<br>&amp; k \sum_{i &#x3D; 1}^n \sum_{d \mid k} [\gcd(i, k) &#x3D; d] \frac{i}{d} \newline<br>&#x3D; &amp; k \sum_{i &#x3D; 1}^n \sum_{d \mid k} [d \mid i]\left[\gcd\left(\frac{i}{d}, \frac{k}{d} \right) &#x3D; 1\right] \dfrac{i}{d}\newline<br>&#x3D; &amp; k \sum_{d \mid k} \sum_{i &#x3D; 1}^{\left\lfloor\frac {n} {d}\right\rfloor} \left[\gcd\left(i, \frac{k}{d} \right) &#x3D; 1\right] i<br>\end{align}<br>$$<br>先把最右侧的 $\sum$ 单独拿出来看，设 $f(n, m) &#x3D; \sum\limits_{i &#x3D; 1}^{n} \left[\gcd\left(i, m \right) &#x3D; 1\right] i$，则 $ans &#x3D; k \sum\limits_{d \mid k} f\left(\left\lfloor\frac {n} {d}\right\rfloor, \frac{k}{d}\right)$：<br>$$<br>\begin{align}<br>f(n, m) &#x3D; &amp;\sum\limits_{i &#x3D; 1}^{n} \left[\gcd\left(i, m \right) &#x3D; 1\right] i\newline<br>&#x3D; &amp; \sum_{i &#x3D; 1}^n i \sum_{d \mid \gcd\left(i, m \right)} \mu(d) \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1}^n i \sum_{d \mid i, d\mid m} \mu(d) \newline<br>&#x3D; &amp; \sum_{d \mid m} \mu(d) \sum_{i &#x3D; 1}^{\left\lfloor\frac {n} {d}\right\rfloor} di\newline<br>&#x3D; &amp; \sum_{d \mid m} \mu(d)d \sum_{i &#x3D; 1}^{\left\lfloor\frac {n} {d}\right\rfloor}i<br>\end{align}<br>$$<br>直接就可做。注意到数据范围非常大，我们可以预处理 1 到 1e7 间的所有 $\mu$，其他的暴力算。这样时间复杂度大约是 $\mathcal{O}(\sqrt n)$。</p>
+<h2 id="P1829-国家集训队-Crash的数字表格"><a href="#P1829-国家集训队-Crash的数字表格" class="headerlink" title="P1829 [国家集训队] Crash的数字表格"></a>P1829 [国家集训队] Crash的数字表格</h2><p>$1 \leq n, m \leq 10^7$，求：<br>$$<br>\sum_{i &#x3D; 1}^n \sum_{j &#x3D; 1}^m \operatorname{lcm}(i, j)<br>$$<br>替换 lcm：<br>$$<br>\sum_{i &#x3D; 1}^n \sum_{j &#x3D; 1}^m \dfrac{i \cdot j}{\gcd(i, j)}<br>$$<br>枚举 $\gcd$ 的值：<br>$$<br>\begin{align}<br>&amp; \sum_{i &#x3D; 1}^n \sum_{j &#x3D; 1}^m \sum_{d \mid i, d \mid j} [\gcd(i, j) &#x3D; d] \dfrac{i \cdot j}{d}\newline<br>&#x3D; &amp; \sum_{d &#x3D; 1}^n \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \sum_{j &#x3D; 1}^{\left\lfloor \frac{m}{d} \right\rfloor} [\gcd(i, j) &#x3D; 1] i \cdot j \cdot d\newline<br>&#x3D; &amp; \sum_{d &#x3D; 1}^n d \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \sum_{j &#x3D; 1}^{\left\lfloor \frac{m}{d} \right\rfloor} [\gcd(i, j) &#x3D; 1] i \cdot j<br>\end{align}<br>$$</p>
+<p>我们把右边这部分单独拿出来，设 $f(n, m) &#x3D; \sum\limits_{i &#x3D; 1}^n \sum\limits_{j &#x3D; 1}^m [\gcd(i, j) &#x3D; 1] i \cdot j$：</p>
+<p>$$<br>\begin{align}<br>f(n, m) &#x3D;&amp; \sum\limits_{i &#x3D; 1}^n \sum\limits_{j &#x3D; 1}^m [\gcd(i, j) &#x3D; 1] i \cdot j\newline<br>&#x3D; &amp; \sum_{i &#x3D; 1}^n \sum_{j &#x3D; 1}^m \sum_{d | i, d | j} \mu(d) \cdot i \cdot j<br>\end{align}<br>$$</p>
+<p>进行一些变换，先枚举 $d$：<br>$$<br>\begin{align}<br>&#x3D; &amp; \sum_{d &#x3D; 1}^n \mu(d) \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \sum_{j &#x3D; 1}^{\left\lfloor \frac{m}{d} \right\rfloor} i \cdot j \cdot d^2\newline<br>&#x3D; &amp; \sum_{d &#x3D; 1}^n \mu(d) d^2 \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} i \sum_{j &#x3D; 1}^{\left\lfloor \frac{m}{d} \right\rfloor} j<br>\end{align}<br>$$<br>注意到这个式子前一个 $\sum$ 可以前缀和优化，后两个 $\sum$ 是等差数列，但是他有良好的范围：带下取整，因此可以数论分块。</p>
+<p>至于整个式子：<br>$$<br>\sum_{d &#x3D; 1}^n d \cdot f\left(\left\lfloor \frac{n}{d} \right\rfloor, \left\lfloor \frac{m}{d} \right\rfloor \right)<br>$$<br>它也可以数论分块。所以整个是 $\mathcal{O}(n)$ 预处理 + 两次数论分块 $\mathcal{O}(n)$，最终时间复杂度 $\mathcal{O}(n)$（实际上还卡不到上界）。</p>
+<h2 id="BJOJ2693-jzptab"><a href="#BJOJ2693-jzptab" class="headerlink" title="BJOJ2693 jzptab"></a>BJOJ2693 jzptab</h2><p>上题的加强版，添加了 $10^4$ 组多测。</p>
+<p>继续考虑优化把式子展开：<br>$$<br>\sum_{d &#x3D; 1}^n d \cdot \sum_{t &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \mu(t) t^2 \sum_{i &#x3D; 1}^{\left\lfloor \frac{n}{dt} \right\rfloor} i \sum_{j &#x3D; 1}^{\left\lfloor \frac{m}{dt} \right\rfloor} j<br>$$<br>设 $\operatorname{Sum}(n) &#x3D; \sum_{i &#x3D; 1}^{n} i$，得：<br>$$<br>\sum_{d &#x3D; 1}^n d \cdot \sum_{t &#x3D; 1}^{\left\lfloor \frac{n}{d} \right\rfloor} \mu(t) t^2 \operatorname{Sum}\left({\left\lfloor \frac{n}{dt} \right\rfloor}\right) \operatorname{Sum}\left({\left\lfloor \frac{m}{dt} \right\rfloor}\right)<br>$$<br>令 $dt &#x3D; T$：<br>$$<br>\begin{align}<br>&#x3D; &amp; \sum_{T &#x3D; 1}^n \operatorname{Sum}\left({\left\lfloor \frac{n}{T} \right\rfloor}\right) \operatorname{Sum}\left({\left\lfloor \frac{m}{T} \right\rfloor}\right) \sum_{d \mid T}^n d \cdot \mu\left(\frac{T}{d}\right) \left(\frac {T} {d}\right)^2\newline<br>&#x3D; &amp; \sum_{T &#x3D; 1}^n \operatorname{Sum}\left({\left\lfloor \frac{n}{T} \right\rfloor}\right) \operatorname{Sum}\left({\left\lfloor \frac{m}{T} \right\rfloor}\right) T \sum_{d \mid T} \mu(d) d<br>\end{align}<br>$$<br>设为 $f(T) &#x3D; \sum_{d \mid T} \mu(d)d$，得：<br>$$<br>&#x3D; \sum_{T &#x3D; 1}^n \operatorname{Sum}\left({\left\lfloor \frac{n}{T} \right\rfloor}\right) \operatorname{Sum}\left({\left\lfloor \frac{m}{T} \right\rfloor}\right) T \cdot f(T)<br>$$<br>尝试证明 $f(T)$ 是一个积性函数：<br>$$<br>f(p) &#x3D; \sum_{d \mid p} \mu(d)d \quad f(q) &#x3D; \sum_{d \mid q} \mu(d)d \qquad (\gcd(p, q) &#x3D; 1)\newline<br>$$<br>$$<br>\begin{align}<br>f(p) \cdot f(q) &amp; &#x3D; \left(\sum_{d \mid p} \mu(d)d\right) \left(\sum_{d \mid q} \mu(d)d\right)\newline<br>&amp; &#x3D; \sum_{d \mid p} \mu(d)d \sum_{t \mid q} \mu(t)t\newline<br>&amp; &#x3D; \sum_{d \mid p} \sum_{t \mid q} dt \cdot \mu(d) \mu(t)\newline<br>\end{align}<br>$$<br>$$<br>\gcd(p, q) &#x3D; 1 \Rightarrow \nexists \ d &#x3D; t \Rightarrow {d \mid d | p} \cap {t \mid t | q} &#x3D; \emptyset ,{d \mid d | p} \cup {t \mid t | q} &#x3D; {x \mid x | pq}<br>$$<br>$$<br>\Downarrow\newline<br>f(p) \cdot f(q) &#x3D; \sum_{d \mid pq} d \cdot \mu(d) &#x3D; f(pq)<br>$$</p>
+<p>Q.E.D</p>
+<p>我们来观察 $f$ 的一些性质：<br>$$<br>f(p) &#x3D; 1 - p, f(p^k) &#x3D; f(p) \quad(p \in \mathbb{P})<br>$$<br>然后就可以线性筛+数论分块了。</p>
+<h2 id="【例题2】周期字符串"><a href="#【例题2】周期字符串" class="headerlink" title="【例题2】周期字符串"></a>【例题2】周期字符串</h2><blockquote>
+<p>求长度为 $n$ 且仅包含小写英文字母（小写字母不一定要全部使用）且循环节长度恰为 $n$ 的字符串的个数。循环节就是最短的复制若干遍后拼起来跟原串相等的字符串。答案对 $10^9 + 7$ 取模。</p>
+</blockquote>
+<p>jpdh 的题，重要的在于转化以及状态设计。</p>
+<p>设 $f(n)$ 为循环节恰好为 $n$ 的字符串个数，$g(n)$ 为长度为 $n$ 的字符串个数（$26^n$）。注意到 $g(n)$ 如果存在循环节，那么长度一定是 $n$ 因数，因此我们可以枚举循环节长度，根据加法原理：<br>$$<br>g(n) &#x3D; \sum_{d \mid n} f(n) &#x3D; (f * 1)(n) \Rightarrow f(n) &#x3D; (g * \mu)(n)<br>$$<br>裸的莫比乌斯反演，甚至是直接爆算 $\mu$。</p>
+<h2 id="BJOJ2694-Lcm"><a href="#BJOJ2694-Lcm" class="headerlink" title="BJOJ2694 Lcm"></a>BJOJ2694 Lcm</h2><p>注意到题意有一个类似于莫比乌斯函数的东西，尝试让他用一个式子表示出来：<br>$$<br>\sum_{i &#x3D; 1}^A \sum_{j &#x3D; 1}^B \operatorname{lcm}(i, j) \mu^2(\gcd(i, j))<br>$$<br>推一推：<br>$$<br>\begin{align}<br>&#x3D; &amp; \sum_{i &#x3D; 1}^A \sum_{j &#x3D; 1}^B \frac{ij}{\gcd(i, j)}<br>\mu^2(\gcd(i, j)) \newline<br>&#x3D; &amp; \sum_{i &#x3D; 1}^A \sum_{j &#x3D; 1}^B \sum_{d \mid i} \mu^2(d)<br>\frac{ij}{d}[\gcd(i, j) &#x3D; d] \newline<br>&#x3D; &amp;  \sum_{d &#x3D; 1}^A \sum_{i &#x3D; 1}^{\left\lfloor \frac{A}{d}<br>\right\rfloor} \sum_{j &#x3D; 1}^{\left\lfloor \frac{B}{d} \right\rfloor}<br>\mu^2(d) ijd [\gcd(i, j) &#x3D; 1] \newline<br>&#x3D; &amp;  \sum_{d &#x3D; 1}^A \mu^2(d) d \sum_{i &#x3D; 1}^{\left\lfloor<br>\frac{A}{d} \right\rfloor} \sum_{j &#x3D; 1}^{\left\lfloor \frac{B}{d}<br>\right\rfloor} ij \sum_{t \mid i, t \mid j} \mu(t) \newline<br>&#x3D; &amp;  \sum_{d &#x3D; 1}^A \mu^2(d) d \sum_{t &#x3D; 1}^{\left\lfloor<br>\frac{A}{d} \right\rfloor} \sum_{i &#x3D; 1}^{\left\lfloor \frac{A}{dt}<br>\right\rfloor} \sum_{j &#x3D; 1}^{\left\lfloor \frac{B}{dt} \right\rfloor}<br>\mu(t) \cdot ijt^2 \newline<br>&#x3D; &amp;  \sum_{d &#x3D; 1}^A \mu^2(d) d \sum_{t &#x3D; 1}^{\left\lfloor<br>\frac{A}{d} \right\rfloor} \mu(t) t^2 \sum_{i &#x3D; 1}^{\left\lfloor<br>\frac{A}{dt} \right\rfloor} \sum_{j &#x3D; 1}^{\left\lfloor \frac{B}{dt}<br>\right\rfloor} ij \newline<br>\end{align}<br>$$<br>设 $S(n) &#x3D; \sum_{i &#x3D; 1}^ni$，并且 $T&#x3D;dt$：<br>$$<br>\begin{align}<br>&#x3D; &amp; \sum_{d &#x3D; 1}^A \mu^2(d) d \sum_{t &#x3D; 1}^{\left\lfloor \frac{A}{d}<br>\right\rfloor} \mu(t) t^2 S\left(\left\lfloor \frac{A}{d}<br>\right\rfloor\right) \cdot S\left(\left\lfloor \frac{B}{d}<br>\right\rfloor\right)\newline<br>&#x3D; &amp; \sum_{T &#x3D; 1}^A S\left(\left\lfloor \frac{A}{d}<br>\right\rfloor\right) \cdot S\left(\left\lfloor \frac{B}{d}<br>\right\rfloor\right) \sum_{d \mid T} \mu^2(d) d \cdot<br>\mu\left(\frac{T}{d}\right) \left(\frac{T}{d}\right)^2\newline<br>&#x3D; &amp; \sum_{T &#x3D; 1}^A S\left(\left\lfloor \frac{A}{d}<br>\right\rfloor\right) \cdot S\left(\left\lfloor \frac{B}{d}<br>\right\rfloor\right) T \sum_{d \mid T} \mu^2(d) \cdot<br>\mu\left(\frac{T}{d}\right) \left(\frac{T}{d}\right)<br>\end{align}<br>$$<br>可以发现后面又是一个卷积的形式，设它为 $g(T)$，卷积的两个函数都是积性函数，因此 $g$ 也是积性函数。我们来分析 $g(n)$：</p>
+<ul>
+<li>如果 $n$ 含有三个及以上个质因数，那么无论它如何拆分，总有一个 $\mu$ 会得 $0$，则 $g(n)&#x3D;0$；</li>
+<li>如果 $n \in \mathbb P$，手玩发现 $g(n)&#x3D;−p^2+p$；</li>
+<li>如果 $n&#x3D;p^2,p \in \mathbb P$，手玩得到 $g(n)&#x3D;−p^3$。</li>
+</ul>
+<p>观察完毕，$g$ 可以线性筛，整个可以数论分块。</p>
+<h2 id="CF1139D-Steps-to-One"><a href="#CF1139D-Steps-to-One" class="headerlink" title="CF1139D Steps to One"></a>CF1139D Steps to One</h2><blockquote>
+<p>给一个数列，每次随机选一个 $1$ 到 $m$ 之间的数加在数列末尾，数列中所有数的 $\gcd&#x3D;1$ 时停止，求期望长度。</p>
+</blockquote>
+<p>解法很多，这里介绍一种：</p>
+<p>研究一下概率与期望之间的转换：</p>
+<p>$$<br>\begin{aligned}<br>E(len) &amp; &#x3D; \sum_{i \ge 1} P(len &#x3D; i) \cdot i \newline<br>&amp; &#x3D; \sum_{i \ge 1} P(len &#x3D; i) \sum_{j &#x3D; 1}^i 1 \newline<br>&amp; &#x3D; \sum_{j \ge 1} \sum_{i \ge j}  P(len &#x3D; i) \newline<br>&amp; &#x3D; \sum_{i \ge 1} P(len \ge i) \newline<br>&amp; &#x3D; 1 + \sum_{i \ge 1} P(len &gt; i)<br>\end{aligned}<br>$$</p>
+<p>然后我们把关于 $P$ 的单独拿出来看：<br>$$<br>\begin{align}<br>P(len &gt; i) &amp; &#x3D; P\left(\gcd \limits_{j &#x3D; 1}^i a_j &gt; 1 \right) \newline<br>&amp; &#x3D; 1 - P\left(\gcd \limits_{j &#x3D; 1}^i a_j &#x3D; 1 \right)\newline<br>&amp; &#x3D; \frac{\sum_{a_1 &#x3D; 1}^m\sum_{a_2 &#x3D; 1}^m\cdots\sum_{a_i &#x3D; 1}^m [\gcd_{j &#x3D; 1}^i a_j &#x3D; 1]}<br>{m^i}<br>\end{align}<br>$$<br>对后面那一坨莫反：<br>$$<br>\begin{align}<br>P(len &gt; i) &#x3D; &amp; 1 - \frac{\sum_d \sum_{a_1 &#x3D; 1}^m \cdots \sum_{a_i &#x3D; 1}^m [\gcd_{j &#x3D; 1}^i a_j &#x3D; d]}{m ^ i}\newline<br>&#x3D; &amp; 1 - \frac{\sum_d\sum_{a_1 &#x3D; 1}^{\lfloor\frac md\rfloor} \cdots \sum_{a_i &#x3D; 1}^{\lfloor\frac md\rfloor} \mu(d)}{m ^ i}\newline<br>&#x3D; &amp; 1 - \frac{\sum_d\mu(d)\lfloor\frac md\rfloor^i}{m ^ i}\newline<br>\end{align}<br>$$</p>
+<p>注意到 $d &#x3D; 1$ 时 $\sum$ 里面的其实就是 $m^i$，所以可以进一步简写为：</p>
+<p>$$<br>\begin{align}<br>&#x3D; &amp; - \frac{\sum_{d &#x3D; 2}^m\mu(d)\lfloor\frac md\rfloor^i}{m ^ i}<br>\end{align}<br>$$</p>
+<p>然后回代到期望的式子，也就是：</p>
+<p>$$<br>\begin{align}<br>E(len) &#x3D; &amp; 1 + \sum_{i &#x3D; 1}^{+\infty} P(len &gt; i)\newline<br>&#x3D; &amp; 1 - \sum_{i &#x3D; 1}^{+\infty}\frac{\sum_{d &#x3D; 2}^m\mu(d)\lfloor\frac md\rfloor^i}{m ^ i}\newline<br>&#x3D; &amp; 1 - \sum_{i &#x3D; 1}^{+\infty}\frac 1{m^i} \sum_{d &#x3D; 2}^m\mu(d)\left\lfloor\frac md\right\rfloor^i\newline<br>&#x3D; &amp; 1 - \sum_{d &#x3D; 2}^m \mu(d)\sum_{i &#x3D; 1}^{+\infty} \left(\frac {\left\lfloor\frac md\right\rfloor}{m} \right)^i\newline<br>\end{align}<br>$$</p>
+<p>注意到最后边的部分是<strong>无限项等比数列求和</strong>，可以利用简单具体数学知识的得到：</p>
+<p>$$<br>E(len) &#x3D; 1 - \sum_{d &#x3D; 2}^m \mu(d) \frac{m}{m - \left\lfloor\frac md\right\rfloor}<br>$$</p>
+<p>$\mathcal O(m)$ 线性筛 $\mu$ 然后直接算就行，复杂度 $\mathcal O(m)$ <del>当然杜教一下也不是不行</del>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6/" class="print-no-link">#数学</a>
+      
+        <a href="/tags/%E6%95%B0%E8%AE%BA/" class="print-no-link">#数论</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>莫比乌斯反演</div>
+      <div>https://mkurisuqwq.github.io/2024/10/01/莫比乌斯反演/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kurisu M</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/01/%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E6%89%A9%E5%B1%95%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86/" title="欧拉定理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">欧拉定理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/01/%E8%8E%AB%E9%98%9F%E6%9D%82%E9%A2%98/" title="莫队杂题">
+                        <span class="hidden-mobile">莫队杂题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

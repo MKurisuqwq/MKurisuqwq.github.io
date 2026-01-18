@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kurisu M">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="二项式反演 由于之前对钦定与恰好间有诸多误解，重整理一遍。  二项式反演有两种常用形式： 形式一：$$f(n)  &#x3D; \sum_{i &#x3D; 0}^{n} {n \choose i} g(i)\Longleftrightarrowg(n)  &#x3D; \sum_{i &#x3D; 0}^{n} (-1)^{n - i} {n \choose i} f(i)$$形式二：$$f(n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计数奇妙题">
+<meta property="og:url" content="https://mkurisuqwq.github.io/2024/11/01/%E8%AE%A1%E6%95%B0%E5%A5%87%E5%A6%99%E9%A2%98(Updated)/index.html">
+<meta property="og:site_name" content="MKurisuqwq&#39;s Blog">
+<meta property="og:description" content="二项式反演 由于之前对钦定与恰好间有诸多误解，重整理一遍。  二项式反演有两种常用形式： 形式一：$$f(n)  &#x3D; \sum_{i &#x3D; 0}^{n} {n \choose i} g(i)\Longleftrightarrowg(n)  &#x3D; \sum_{i &#x3D; 0}^{n} (-1)^{n - i} {n \choose i} f(i)$$形式二：$$f(n">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-11-01T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-18T11:15:02.746Z">
+<meta property="article:author" content="Kurisu M">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="组合计数">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>计数奇妙题 - MKurisuqwq&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mkurisuqwq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MKurisuqwq&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/86.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计数奇妙题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-01 12:00" pubdate>
+          2024年11月1日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计数奇妙题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="二项式反演"><a href="#二项式反演" class="headerlink" title="二项式反演"></a>二项式反演</h2><blockquote>
+<p>由于之前对<strong>钦定</strong>与<strong>恰好</strong>间有诸多误解，重整理一遍。</p>
+</blockquote>
+<p>二项式反演有两种常用形式：</p>
+<p>形式一：<br>$$<br>f(n)  &#x3D; \sum_{i &#x3D; 0}^{n} {n \choose i} g(i)<br>\Longleftrightarrow<br>g(n)  &#x3D; \sum_{i &#x3D; 0}^{n} (-1)^{n - i} {n \choose i} f(i)<br>$$<br>形式二：<br>$$<br>f(n)  &#x3D; \sum_{i &#x3D; n}^{m} {i \choose n} g(i) \Longleftrightarrow<br>g(n)  &#x3D; \sum_{i &#x3D; n}^{n} (-1)^{i - n} {i \choose n} f(i)<br>$$</p>
+<p>由于不难发现以上两者等价，因此证明任意一个即可：</p>
+<p>直接将上式代入到下式中，如果成立则二项式反演显然成立：<br>$$<br>\begin{aligned}<br>g(n) &amp;&#x3D; \sum_{i &#x3D; 0}^{n} (-1)^{n - i} {n \choose i} \sum_{j &#x3D; 0}^{i} {i \choose j} g(j)\newline<br>&amp;&#x3D; \sum_{i &#x3D; 0}^{n} \sum_{j &#x3D; 0}^{i} (-1)^{n - i} {n \choose i} {i \choose j} g(j)\newline<br>&amp;&#x3D; \sum_{i &#x3D; 0}^{n} \sum_{j &#x3D; 0}^{i} (-1)^{n - i} {n \choose j} {n - j \choose i - j} g(j)\newline<br>&amp;&#x3D; \sum_{j &#x3D; 0}^{n}  g(j)  {n \choose j} \sum_{i &#x3D; j}^{n} (-1)^{n - i} {n - j \choose i - j}\newline<br>&amp;&#x3D; \sum_{j &#x3D; 0}^{n}  g(j)  {n \choose j} \sum_{k &#x3D; 0}^{n - j} (-1)^{(n - j) - k} {n - j \choose k}\newline<br>&amp;&#x3D; \sum_{j &#x3D; 0}^{n}  g(j)  {n \choose j} \sum_{k &#x3D; 0}^{n - j} (-1)^{(n - j) - k} 1^k {n - j \choose k}<br>\end{aligned}<br>$$<br>最后的部分利用二项式定理，$n - j &#x3D; 0$ 时单独算，得到：</p>
+<p>$$<br>\begin{aligned}<br>g(n) &amp;&#x3D; \sum_{j &#x3D; 0}^{n}  g(j)  {n \choose j} [n &#x3D; j]\newline<br>&amp;&#x3D; g(n) {n \choose n} &#x3D; g(n)<br>\end{aligned}<br>$$</p>
+<blockquote>
+<p><strong>钦定</strong>与<strong>恰好</strong>：</p>
+<p>我们经常会遇到：求恰好有 $n$ 个位置满足条件的方案数或求至少 $n$ 个位置满足条件的方案数，因为后者我们可以对前者做和得到，即只要完成前者，则两个问题都可以被解决。</p>
+<p>这里，我们设 $f(n)$ 表示钦定有 $n$ 个位置满足要求、其余位置随意的方案数，$g(n)$ 表示恰好 $n$ 个位置满足要求的方案数。枚举我们所钦定的位置是什么，不难得到以下关系 $f(n)  &#x3D; \sum_{i &#x3D; n}^{m} {i \choose n} g(i)$，然后可以二项式反演。</p>
+<p>然而，问题在于，初学者经常无法理解<em>钦定</em>与<em>至少</em>间的差别，这里我们举以下例子：</p>
+<p><code>1 0 0 1 0 1 1</code> 是一个状态，它会在至少有 $1, 2, 3, 4$ 符合要求的时候被计算一次贡献。但是，注意，它会在钦定有 $2$ 个位置满足要求时被统计 $4 \choose 2$ 次，二项式系数取决于 $4$ 个 $1$ 中的哪两个位置是被钦定的，当钦定 $1, 3, 4$ 个位置满足要求时同理。</p>
+</blockquote>
+<h2 id="CF285E"><a href="#CF285E" class="headerlink" title="CF285E"></a>CF285E</h2><p>设<strong>钦定</strong>有 $m$ 部分符合要求的方案数为 $f(m)$，<strong>恰好</strong>有 $m$ 部分符合要求的方案数为 $g(m)$，那么有：<br>$$<br>f(m) &#x3D; \sum_{i &#x3D; m}^n {i \choose m} g(i)<br>$$<br>其中 $i \choose m$ 指的是枚举 $f(m)$ 的 $m$ 个数分别代表了 $g(i)$ 中 $i$ 个位置的哪 $m$ 个。这个时候我们二项式反演：<br>$$<br>g(m) &#x3D; \sum_{i &#x3D; m}^n (-1)^{i - m} {i \choose m} f(i)<br>$$<br>就可以通过 $f$ 得到答案 $g(m)$。</p>
+<p>函数 $f$ 可以通过 dp 求得。具体的，设 $dp_{i, j, 0&#x2F;1, 0&#x2F;1}$ 表示考虑到前 $i$ 个数，有 $j$ 部分满足要求，$i&#x2F;i + 1$ 选或不选，转移：</p>
+<ul>
+<li>当前位置是完美数，选 $i - 1$；</li>
+<li>当前位置是完美数，选 $i + 1$；</li>
+<li>当前位置不是完美数。</li>
+</ul>
+<p>以上三种情况分类讨论即可。得到 $f(i) &#x3D; dp_{n, m, 0, 0} + dp_{n, m, 1, 0}$。</p>
+<h2 id="AGC024E"><a href="#AGC024E" class="headerlink" title="AGC024E"></a>AGC024E</h2><p>正难则反，考虑我们已经有了长度为 $n$ 的 $A_n$，相当于每一次删去一个字符，并且字典序单调递减。考虑什么时候字典序会增加，那么就是删掉的 $s_i &lt; s_{i + 1}$。设 $f_{i, j}$ 表示长度为 $i$ 的串、使用的字符集大小为 $[1, j]$，在转移时我们枚举 $1$ 的位置，假设他在第 $p$ 个时刻后被删除，那么有：<br>$$<br>\begin{align}<br>f_{i, j} &amp; &#x3D; \sum_{k &#x3D; 1}^i \sum_{p &#x3D; i - k + 1}^i f_{k - 1, j - 1} \cdot f_{i-k, j} {p - 1 \choose i - k} \newline<br>&amp; &#x3D; \sum_{k &#x3D; 1}^i f_{k - 1, j - 1} \cdot f_{i-k, j} \sum_{p &#x3D; i - k + 1}^i{ p - 1 \choose i - k}<br>\end{align}<br>$$<br>后面这部分可以预处理+前缀和。</p>
+<h2 id="AGC013D"><a href="#AGC013D" class="headerlink" title="AGC013D"></a>AGC013D</h2><p>神秘题。</p>
+<p>一共有四种操作，如果以当前操作次数 $i$ 为 $x$ 轴，当前盒子中白球的数量 $j$ 为 $y$ 轴，作出图像，我们发现 $f_{i, j}$ 可以向 $f_{i + 1, j + 1}, f_{i + 1, j}, f_{i + 1, j - 1}$ 转移（注意 $f_{i + 1, j}$ 会被两种不同的操作转移到，这对应了两种生成序列，因此要统计两次）。进一步的，我们发现不同的图像对应的生成序列不同，相同的图像无论如何上下移动对应的生成序列一定都是相同的。解决办法是只需要统计最靠下的图像即可，换句话说就是图像中存在某个点 $(x, 0)$ 的图像就要统计在最终答案中。注意有一种向 $f_{i + 1, j}$ 转移的情况在转移过程中也会出现 $(x, 0)$ 的情况，不要忘记统计。</p>
+<h2 id="P2159"><a href="#P2159" class="headerlink" title="P2159"></a>P2159</h2><p>直接求最多有 $k$ 对的方案是困难的，注意到 $k$ 不大，那么我们设 $f(k)$ 表示恰好有 $k$ 对满足条件的方案数，最终答案就是 $\sum_{i &#x3D; 0}^{k} f(i)$。对于 $f(i)$，我们现在有两种做法：</p>
+<ol>
+<li><p>二项式反演，设 $g(k)$ 表示钦定有 $k$ 对满足条件的方案数。如果将男女按身高降序排序，那么对于男生 $i$，有长度为 $num_i$ 的前缀女生满足选他可以使位置 $i$ 符合条件，并且 $num_i$ 是单调递增的。设 $dp_{i, j}$ 表示钦定前 $i$ 个人，有 $j$ 个位置满足条件。那么转移有：</p>
+<ul>
+<li>$dp_{i - 1, j} \times (num_i - j) \rightarrow dp_{i, j + 1}$；</li>
+<li>$dp_{i - 1, j} \rightarrow dp_{i, j}$。</li>
+</ul>
+<p>同时 $dp_{n, i} \times (n - i)! &#x3D; g(i)$，这样就可以二项式反演。</p>
+</li>
+<li><p>设 $dp_{i, j}$ 表示前 $i$ 个人恰好有 $j$ 个位置满足条件，男女顺序排序，分类讨论转移。</p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6/" class="print-no-link">#数学</a>
+      
+        <a href="/tags/DP/" class="print-no-link">#DP</a>
+      
+        <a href="/tags/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0/" class="print-no-link">#组合计数</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计数奇妙题</div>
+      <div>https://mkurisuqwq.github.io/2024/11/01/计数奇妙题(Updated)/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kurisu M</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年11月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/27/TrickInABC/" title="ABC Trick 整理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ABC Trick 整理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/01/BSGS/" title="大步小步（BSGS）">
+                        <span class="hidden-mobile">大步小步（BSGS）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

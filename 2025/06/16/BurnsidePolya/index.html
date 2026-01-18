@@ -1,0 +1,744 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kurisu M">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="群论部分继承群的定义, 接下来进一步研究群的性质. 子群与陪集若 $H \subset G$, 且 $(H, \times)$ 构成群, 则称 $(H, \times)$ 是 $(G, \times)$ (显然是群) 的子群. 可记作 $H \leq G$. 若 $H$ 是 $G$ 的子群, 且 $g \in G$, 则定义左右陪集的概念:  $ _{g}H &#x3D; \{g \times h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Burnside 引理与 Pólya 引理">
+<meta property="og:url" content="https://mkurisuqwq.github.io/2025/06/16/BurnsidePolya/index.html">
+<meta property="og:site_name" content="MKurisuqwq&#39;s Blog">
+<meta property="og:description" content="群论部分继承群的定义, 接下来进一步研究群的性质. 子群与陪集若 $H \subset G$, 且 $(H, \times)$ 构成群, 则称 $(H, \times)$ 是 $(G, \times)$ (显然是群) 的子群. 可记作 $H \leq G$. 若 $H$ 是 $G$ 的子群, 且 $g \in G$, 则定义左右陪集的概念:  $ _{g}H &#x3D; \{g \times h">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mkurisuqwq.github.io/img/image-20250617154754480.png">
+<meta property="article:published_time" content="2025-06-16T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-18T11:15:02.742Z">
+<meta property="article:author" content="Kurisu M">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="抽象代数">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mkurisuqwq.github.io/img/image-20250617154754480.png">
+  
+  
+  
+  <title>Burnside 引理与 Pólya 引理 - MKurisuqwq&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mkurisuqwq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MKurisuqwq&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/86.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Burnside 引理与 Pólya 引理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-16 12:00" pubdate>
+          2025年6月16日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Burnside 引理与 Pólya 引理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="群论部分"><a href="#群论部分" class="headerlink" title="群论部分"></a>群论部分</h3><p>继承群的定义, 接下来进一步研究群的性质.</p>
+<h4 id="子群与陪集"><a href="#子群与陪集" class="headerlink" title="子群与陪集"></a>子群与陪集</h4><p>若 $H \subset G$, 且 $(H, \times)$ 构成群, 则称 $(H, \times)$ 是 $(G, \times)$ (显然是群) 的<strong>子群</strong>. 可记作 $H \leq G$.</p>
+<p>若 $H$ 是 $G$ 的子群, 且 $g \in G$, 则定义左右陪集的概念:</p>
+<ul>
+<li>$ _{g}H &#x3D; \{g \times h | h \in H\}$, 称 $ _{g}H$ 是 $g$ 的<strong>左陪集</strong>;</li>
+<li>$H_g &#x3D; \{h \times g | h \in H\}$, 称 $H_g$ 是 $g$ 的<strong>右陪集</strong>.</li>
+</ul>
+<p>左右陪集性质相同, 我们接下来只举例右陪集:</p>
+<h4 id="陪集的性质"><a href="#陪集的性质" class="headerlink" title="陪集的性质"></a>陪集的性质</h4><p>$$<br>\forall g \in G, |H| &#x3D; |H_g|<br>$$</p>
+<blockquote>
+<p>证明: 若 $h_1 g &#x3D; h_2 g$, 根据消去律显然有 $h_1 &#x3D; h_2$, 则命题得证.</p>
+</blockquote>
+<p>$$<br>\forall g \in G, g \in H_g<br>$$</p>
+<blockquote>
+<p>证明: 群 $G$ 中存在幺元.</p>
+</blockquote>
+<p>$$<br>H_g &#x3D; H \Leftrightarrow g \in H<br>$$</p>
+<blockquote>
+<p>证明:</p>
+<p>充分性: 由于 $g \in H_g$.</p>
+<p>必要性: 由群 $H$ 的封闭性得 $H_g \subset H$, 由于 $|H| &#x3D; |H_g|$, 推出 $H_g &#x3D; H$.</p>
+</blockquote>
+<p>$$<br>H_a &#x3D; H_b \Leftrightarrow ab^{-1} \in H<br>$$</p>
+<p>右侧换一种表述也可以是 $a \in H_b, b \in H_a, ab^{-1} \in H$</p>
+<blockquote>
+<p>证明:</p>
+<p>充分性: $H_{a b^{-1}} &#x3D; H$, 得 $ab^{-1} \in H$.</p>
+<p>必要性: 由 $H_{ab^{-1}} &#x3D; H$, 所以 $H_{ab^{-1}b} &#x3D; H_b$.</p>
+</blockquote>
+<h4 id="拉格朗日定理"><a href="#拉格朗日定理" class="headerlink" title="拉格朗日定理"></a>拉格朗日定理</h4><p>$$<br>H_a \cap H_b \neq \emptyset \Rightarrow H_a &#x3D; H_b<br>$$</p>
+<p>这个命题描述了 $H$ 的任意两个陪集要么相等, 要么一定不交.</p>
+<blockquote>
+<p>证明:</p>
+<p>考虑 $c \in H_a \cap H_b$, 则 $\exists h_1, h_2 \in H, h_1a &#x3D; h_2b &#x3D; c$, 得 $ab^{-1} &#x3D; h_2h_1^{-1} \in H$, 则 $H_a &#x3D; H_b$.</p>
+</blockquote>
+<p>根据以上内容, 我们可以进一步推断出: 若 $H$ 是 $G$ 的子群, 则 $|H|$ 整除 $|G|$, 更准确的说:<br>$$<br>|G| &#x3D; |H| \cdot [G : H]<br>$$<br>$[G : H]$ 只 $H$ 在 $G$ 中本质不同的陪集数. 上式称为<strong>拉格朗日定理</strong>.</p>
+<h3 id="置换群"><a href="#置换群" class="headerlink" title="置换群"></a>置换群</h3><h4 id="置换"><a href="#置换" class="headerlink" title="置换"></a>置换</h4><p><strong>置换</strong>可以用类似于矩阵的方式表示, 形如:<br>$$<br>\sigma &#x3D;<br>\begin{pmatrix}<br>a_1, a_2, \cdots, a_n \newline<br>a_{p_1}, a_{p_2}, \cdots, a_{p_n}<br>\end{pmatrix}<br>$$<br>($p$ 是排列)</p>
+<p>由于排列的事实我们知道长度为 $n$ 的本质不同的置换数量一共由 $n!$ 个.</p>
+<p>当然还有一种更为省事的表示方法:</p>
+<p>$$<br>\sigma &#x3D; (a_{p_1}, a_{p_2}, \cdots, a_{p_n})<br>$$</p>
+<p>有一些置换只对一部分元素造成影响, 也可以简写为:</p>
+
+$$
+\sigma = 
+\begin{pmatrix}
+a_1, a_2, \cdots, a_m, a_{m + 1}, \cdots, a_n \newline
+a_{p_1}, a_{p_2}, \cdots, a_{p_m}, a_{m + 1}, \cdots, a_n
+\end{pmatrix}
+= 
+\begin{pmatrix}
+a_1, a_2, \cdots, a_m \newline
+a_{p_1}, a_{p_2}, \cdots, a_{p_m}
+\end{pmatrix}
+$$
+
+
+<h4 id="置换的二元运算"><a href="#置换的二元运算" class="headerlink" title="置换的二元运算"></a>置换的二元运算</h4><p>定义置换的乘法为:<br>$$<br>\begin{aligned}<br>\sigma_1 &amp;&#x3D; (a_{p_1}, a_{p_2}, \cdots, a_{p_n})\newline<br>\sigma_2 &amp;&#x3D; (a_{q_1}, a_{q_2}, \cdots, a_{q_n})\newline<br>\sigma_1 \times \sigma_2 &amp;&#x3D; (a_{q_{p_1}}, a_{q_{p_2}}, \cdots, a_{q_{p_n}})<br>\end{aligned}<br>$$<br>不难发现实际上就相当于先进行置换 $\sigma_1$ 再进行置换 $\sigma_2$, 那么我们不加证明的声称他具有结合律.</p>
+<p>同理不难得到:</p>
+<p><strong>单位置换</strong>:<br>$$<br>e &#x3D; (1, 2, \cdots, n)<br>$$<br><strong>逆置换</strong>:<br>$$<br>\begin{aligned}<br>\sigma &amp;&#x3D; (a_{p_1}, a_{p_2}, \cdots, a_{p_n}) \newline<br>\sigma^{-1} &amp;&#x3D; (a_{p_n}, a_{p_{n - 1}}, \cdots, a_{p_1})<br>\end{aligned}<br>$$</p>
+<p><strong>轮换</strong></p>
+<p>轮流换.</p>
+<p>$$<br>\sigma &#x3D;<br>\begin{pmatrix}<br>a_1, \cdots, a_{n - 1}, a_n \newline<br>a_{2},\cdots, a_{n}, a_{n + 1}<br>\end{pmatrix}<br>$$</p>
+<p>不难发现任意一个置换都可以拆分为若干轮换的合并.</p>
+<h4 id="置换群-1"><a href="#置换群-1" class="headerlink" title="置换群"></a>置换群</h4><p>不妨令集合 $N&#x3D;\{1,2,3, \cdots, n\}$ ，令集合 $M$ 为 $N$ 的若干个排列构成的集合，我们令群 $G&#x3D;(M,\times)$, 若 $G$ 同时满足群的性质, 则称 $G$ 为<strong>置换群</strong>.</p>
+<h3 id="群作用"><a href="#群作用" class="headerlink" title="群作用"></a>群作用</h3><p>目前研究的群论中的运算都局限于群之内, 接下来介绍群作用 (偏指左群作用).</p>
+<p>对于一个集合 $M$ 和群 $G$.</p>
+<p>若给定了一个二元函数 $\varphi(v,k)$ 其中 $v$ 为群中的元素, $k$ 为集合元素, 且有:<br>$$<br>\begin{aligned}<br>\varphi(e,k) &amp;&#x3D; k \newline<br>\varphi(g,\varphi(s,k))&amp;&#x3D;\varphi(g \times s,k)<br>\end{aligned}<br>$$<br>则称呼群 $G$ 作用于集合 $M$.</p>
+<p>举个例子, 刚才介绍的置换群就作用于长度为 $n$ 的序列集合上.</p>
+<h3 id="轨道-稳定子-定理"><a href="#轨道-稳定子-定理" class="headerlink" title="轨道-稳定子 定理"></a>轨道-稳定子 定理</h3><h4 id="轨道"><a href="#轨道" class="headerlink" title="轨道"></a>轨道</h4><p>简单而言就是元素 $x$ 通过 $G$ 中的作用可以转移到的所有元素的集合, 记作 $G(x) &#x3D; \{g(x) | g \in G\}$.</p>
+<h4 id="稳定子"><a href="#稳定子" class="headerlink" title="稳定子"></a>稳定子</h4><p>定义: $G^x &#x3D; \{g | g \in G, g(x) &#x3D; x\}$.</p>
+<h4 id="轨道-稳定子-定理-1"><a href="#轨道-稳定子-定理-1" class="headerlink" title="轨道-稳定子 定理"></a>轨道-稳定子 定理</h4><p>$$<br>|G^x| \times |G(x)| &#x3D; |G|<br>$$</p>
+<p>注意到 $G^x$ 是 $G$ 的子群.</p>
+<blockquote>
+<p>证明: 只需考虑证明 $(G^x, \times)$ 构成群即可.</p>
+<ul>
+<li>结合律, 幺元显然成立.</li>
+<li>封闭性: 若 $f, g \in G^x$, 则 $f(x) &#x3D; g(x) &#x3D; x$, 显然有 $(f \times g)(x) &#x3D; x$, 则 $f\times g \in G^x$.</li>
+<li>逆元: 若 $g \in G^x$, 则 $g^{-1}(x) &#x3D; g^{-1}(g(x)) &#x3D; e(x) &#x3D; x$, 推出 $g^{-1} \in G$</li>
+</ul>
+</blockquote>
+<p>那么结合拉格朗日定理, 只需证明 $|G(x)| &#x3D; [G : G^x]$.</p>
+<p><img src="/img/image-20250617154754480.png" srcset="/img/loading.gif" lazyload alt="https:&#x2F;&#x2F;www.less-bug.com&#x2F;posts&#x2F;understanding-group-action-and-orbital-stabilizer-theorem&#x2F;"></p>
+<h3 id="Burnside-引理"><a href="#Burnside-引理" class="headerlink" title="Burnside 引理"></a>Burnside 引理</h3><p>定义 $A,B$ 是两个有限集合，$X&#x3D;B^A$ 表示所有从 $A$ 到 $B$ 的映射, $G$ 是作用在 $A$ 上的一个置换群 (跟上面一样), 如果 $x,y\in X$ 在 $G$ 作用下可以相等即存在 $f\in G$ 使得 $f(x)&#x3D;y$ 则定义$x,y$ 属于一个等价类，则不同的等价类的数量为：<br>$$<br>|X&#x2F;G|&#x3D;\frac{1}{|G|}\sum_{g\in G} X^g<br>$$<br>其中,  $X^g$ 为 $X$ 在 $g$ 作用下的不动点的数量. 即满足 $g(x)&#x3D;x$ 这样的 $x$ 的数量.<br>文字描述: $X$ 在群 $G$ 作用下的等价类总数等于每一个 $g$ 作用于 $X$ 的不动点的算数平均值.</p>
+<blockquote>
+<p>证明: (Burnside 引理本质上是更换了枚举量, 从而方便计数)<br>$$<br>\begin{aligned}<br>|X&#x2F;G|&amp;&#x3D;\sum_{Y\in X&#x2F;G}1\newline<br>&amp;&#x3D;\sum_{Y\in X&#x2F;G}\sum_{x\in Y}\frac{1}{|Y|}\newline<br>&amp;&#x3D;\sum_{Y\in X&#x2F;G}\sum_{x\in Y}\frac{1}{|G(x)|}\newline<br>&amp;&#x3D;\sum_{x\in X}\frac{1}{|G(x)|}<br>\end{aligned}<br>$$<br>根据轨道-稳定子 定理, 我们有 $|G|&#x3D;|G^x|\cdot |G(x)|$, 所以<br>$$<br>\begin{aligned}<br>|X&#x2F;G|&amp;&#x3D;\sum_{x\in X}\frac{1}{|G(x)|}\newline<br>&amp;&#x3D;\frac{1}{|G|}\sum_{x\in X}\frac{|G|}{|G(x)|}\newline<br>&amp;&#x3D;\frac{1}{|G|}\sum_{x\in X}|G^x|\newline<br>&amp;&#x3D;\frac{1}{|G|}|\{(x,g) \arrowvert g(x)&#x3D;x,(x,g)\in X\times G \}|\newline<br>&amp;&#x3D;\frac{1}{|G|}\sum_{g\in G}|X^g|<br>\end{aligned}<br>$$<br>至此我们就证明了 Burnside 引理.</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6/" class="print-no-link">#数学</a>
+      
+        <a href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/" class="print-no-link">#抽象代数</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Burnside 引理与 Pólya 引理</div>
+      <div>https://mkurisuqwq.github.io/2025/06/16/BurnsidePolya/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kurisu M</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/24/Linux-Basics/" title="Linux 基础知识, 适合有 Windows 编程经验的 OIer 选手, 涵盖多种竞赛技巧">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux 基础知识, 适合有 Windows 编程经验的 OIer 选手, 涵盖多种竞赛技巧</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/12/LagrangeInterpolating/" title="拉格朗日插值">
+                        <span class="hidden-mobile">拉格朗日插值</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

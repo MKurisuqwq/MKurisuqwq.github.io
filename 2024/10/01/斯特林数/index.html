@@ -1,0 +1,723 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kurisu M">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一类斯特林数 圆排列将数字排成一个环，我们认为两个环本质不同当且仅当存在某个位置的前驱或后继不同.   例如：1, 2, 3 与 3, 1, 2 是本质相同的两个圆排列，1, 2, 3 与 1, 3, 2 是本质不同的两个圆排列。  记 ${n \brack m}$ 为将 $n$ 个互不相同的元素划分为 $m$ 个互不区分的非空圆排列的方案数，有递推式：$${n \brack m} &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斯特林数">
+<meta property="og:url" content="https://mkurisuqwq.github.io/2024/10/01/%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0/index.html">
+<meta property="og:site_name" content="MKurisuqwq&#39;s Blog">
+<meta property="og:description" content="第一类斯特林数 圆排列将数字排成一个环，我们认为两个环本质不同当且仅当存在某个位置的前驱或后继不同.   例如：1, 2, 3 与 3, 1, 2 是本质相同的两个圆排列，1, 2, 3 与 1, 3, 2 是本质不同的两个圆排列。  记 ${n \brack m}$ 为将 $n$ 个互不相同的元素划分为 $m$ 个互不区分的非空圆排列的方案数，有递推式：$${n \brack m} &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-01T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-18T11:15:02.745Z">
+<meta property="article:author" content="Kurisu M">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="数论">
+<meta property="article:tag" content="组合计数">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>斯特林数 - MKurisuqwq&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mkurisuqwq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MKurisuqwq&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/86.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="斯特林数"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-01 12:00" pubdate>
+          2024年10月1日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">斯特林数</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="第一类斯特林数"><a href="#第一类斯特林数" class="headerlink" title="第一类斯特林数"></a>第一类斯特林数</h2><blockquote>
+<p>圆排列将数字排成一个环，我们认为两个环本质不同当且仅当存在某个位置的前驱或后继不同.</p>
+</blockquote>
+<blockquote>
+<p>例如：<code>1, 2, 3</code> 与 <code>3, 1, 2</code> 是本质相同的两个圆排列，<code>1, 2, 3</code> 与 <code>1, 3, 2</code> 是本质不同的两个圆排列。</p>
+</blockquote>
+<p>记 ${n \brack m}$ 为将 $n$ 个互不相同的元素划分为 $m$ 个互不区分的非空圆排列的方案数，有递推式：<br>$$<br>{n \brack m} &#x3D; {n - 1 \brack m - 1} + (n - 1) {n - 1 \brack m}<br>$$</p>
+<blockquote>
+<p>证明：左侧即为将新来的元素单独放到一个空圆排列中，右侧为将新来的元素放到原有的 $n - 1$ 个数的后继。</p>
+</blockquote>
+<h2 id="第二类斯特林数"><a href="#第二类斯特林数" class="headerlink" title="第二类斯特林数"></a>第二类斯特林数</h2><p>记 ${n \brace m}$ 为将 $n$ 个互不相同的元素划分为 $m$ 个互不区分的非空集合的方案数，即为：将 $n$ 个有标号小球放入 $m$ 个无标号盒子（每个盒子至少有一个小球）的方案数。有递推式：<br>$$<br>{n \brace m} &#x3D; {n - 1 \brace m - 1} + m \cdot {n - 1 \brace m}<br>$$</p>
+<blockquote>
+<p>证明：左侧即为将新来的元素单独放到一个空集合中，右侧为将新来的元素放到原有的集合中。</p>
+</blockquote>
+<p>那么相互区分的集合怎么办？显然只需乘上 $m!$。</p>
+<p>同时，有通项公式：<br>$$<br>{n \brace m} &#x3D; \frac{1}{m!} \sum_{i &#x3D; 0}^m (-1)^i {m \choose i} (m - i)^n<br>$$</p>
+<blockquote>
+<p>证明：考虑更简单的情况：盒子有标号，那么只要将答案除以 $m!$ 即为无标号的结果。</p>
+</blockquote>
+<blockquote>
+<p>进一步的，假如集合可以为空，设 $f(x)$ 为钦定有 $x$ 个集合为空的方案数，$g(x)$ 为恰好 $x$ 个集合为空的方案数。不难得到：<br>$$<br>f(x) &#x3D; \sum_{i &#x3D; x}^m {i \choose x} g(i) &#x3D; {m \choose x} (m - x)^n<br>$$<br>二项式反演：<br>$$<br>\begin{align}<br>g(x) &amp; &#x3D; \sum_{i &#x3D; x}^m {i \choose x} (-1)^{i - x} f(i) \newline<br>&amp; &#x3D; \sum_{i &#x3D; x}^m {i \choose x} (-1)^{i - x} {m \choose i} (m - i)^n<br>\end{align}<br>$$<br>得到集合不可以为空的情况为 $g(0)$，证毕。</p>
+</blockquote>
+<p>我们还可对通项公式进行二项式反演，得到：<br>$$<br>m^n &#x3D; \sum_{i &#x3D; 0}^m {m \choose i} i! {n \brace i}<br>$$<br>组合意义上，这指的是将 $n$ 个有标号小球放入 $m$ 个有标号盒子内、盒子可空的方案数（还可以通过枚举空盒子个数结合第二类斯特林数进行证明）。</p>
+<h2 id="上升-下降幂"><a href="#上升-下降幂" class="headerlink" title="上升&#x2F;下降幂"></a>上升&#x2F;下降幂</h2><p>上升幂：<br>$$<br>n^\overline m &#x3D; \prod_{i &#x3D; n}^{n + m - 1} i<br>$$</p>
+<p>下降幂：<br>$$<br>n^\underline m &#x3D; \prod_{i &#x3D; n}^{n - m + 1} i &#x3D; \frac{n!}{(n - m)!}<br>$$</p>
+<p>不难发现下降幂即为排列数，为 $m! {n \choose m}$。</p>
+<h3 id="上升-下降幂间的转换"><a href="#上升-下降幂间的转换" class="headerlink" title="上升&#x2F;下降幂间的转换"></a>上升&#x2F;下降幂间的转换</h3><p>$$<br>\begin{align}<br>x^\overline n &#x3D; (-1)^n (-x)^\underline n\newline<br>x^\underline n &#x3D; (-1)^n (-x)^\overline n<br>\end{align}<br>$$</p>
+<blockquote>
+<p>证明： 以上式为例，强行展开：<br>$$<br>\begin{align}<br>x^\overline n &amp;&#x3D; \prod_{i &#x3D; 1}^{n} x + i - 1 \newline<br>&amp;&#x3D; (-1)^n \prod_{i &#x3D; 1}^n -x - i + 1\newline<br>&amp;&#x3D; (-1)^n (-x)^\overline n<br>\end{align}<br>$$</p>
+</blockquote>
+<blockquote>
+<p>下式以此类推。</p>
+</blockquote>
+<h2 id="斯特林数结合上升-下降幂"><a href="#斯特林数结合上升-下降幂" class="headerlink" title="斯特林数结合上升&#x2F;下降幂"></a>斯特林数结合上升&#x2F;下降幂</h2><h3 id="通常幂转下降幂"><a href="#通常幂转下降幂" class="headerlink" title="通常幂转下降幂"></a>通常幂转下降幂</h3><p>$$<br>n^m &#x3D; \sum_{i &#x3D; 0}^m {m \brace i} n^\underline i<br>$$</p>
+<blockquote>
+<p>证明考虑组合意义：</p>
+</blockquote>
+<blockquote>
+<p>$n^m$ 表示将 $m$ 个有标号球放到 $n$ 个有标号盒子的方案数，无其他限制。</p>
+</blockquote>
+<blockquote>
+<p>则枚举非空的盒子个数（第二类斯特林数）并乘上排列数即可得到原式。</p>
+</blockquote>
+<h3 id="上升幂转通常幂"><a href="#上升幂转通常幂" class="headerlink" title="上升幂转通常幂"></a>上升幂转通常幂</h3><p>$$<br>n^\overline m &#x3D; \sum_{i &#x3D; 0}^m {m \brack i} n^i<br>$$</p>
+<blockquote>
+<p>证明考虑数学归纳：</p>
+</blockquote>
+<blockquote>
+<p>当 $m &#x3D; 1$ 时，显然成立。</p>
+</blockquote>
+<blockquote>
+<p>当 $m &gt; 1$ 时，归纳得 $m - 1$ 时成立。</p>
+</blockquote>
+<blockquote>
+<p>左侧拆开：<br>$$<br>n^\overline m &#x3D; n^\overline{m - 1} (n + m - 1)<br>$$<br>代入结论：<br>$$<br>\begin{align}<br>&amp;n^\overline{m - 1} (n + m - 1)\newline<br>&#x3D;&amp; \sum_{i &#x3D; 0}^{m - 1} {m - 1 \brack i} n^i (n + m - 1)\newline<br>&#x3D;&amp; \sum_{i &#x3D; 0}^{m - 1} {m - 1 \brack i} n^{i + 1} + \sum_{i &#x3D; 0}^{m - 1} {m - 1 \brack i} n^i(m - 1)\newline<br>&#x3D;&amp; \sum_{i &#x3D; 1}^{m} {m - 1 \brack i - 1} n^{i} + \sum_{i &#x3D; 0}^{m - 1} (m - 1){m - 1 \brack i} n^i\newline<br>&#x3D;&amp; \sum_{i &#x3D; 0}^{m} \left({m - 1 \brack i - 1} + (m - 1){m - 1 \brack i}\right) n^i - {m - 1 \brack 0 - 1} n^0 - (m - 1){m - 1 \brack m} n^m<br>\end{align}<br>$$<br>多出来的两项无意义，直接就为 $0$ 了。</p>
+</blockquote>
+<blockquote>
+<p>然后求和式中间的是第一类斯特林数的递推式，得：<br>$$<br>\sum_{i &#x3D; 0}^m {m \brack i} n^i<br>$$<br>原式得证。</p>
+</blockquote>
+<h2 id="斯特林反演"><a href="#斯特林反演" class="headerlink" title="斯特林反演"></a>斯特林反演</h2><p>$$<br>f(n) &#x3D; \sum_{i &#x3D; 0}^n {n \brace i} g(i) \Leftrightarrow g(n) &#x3D; \sum_{i &#x3D; 0}^n (-1)^{n - i}{n \brack i} f(i)<br>$$</p>
+<h3 id="反转公式"><a href="#反转公式" class="headerlink" title="反转公式"></a>反转公式</h3><p>根据反演的前提条件，需证明：<br>$$<br>\left{<br>\begin{align}<br>\sum_{i &#x3D; j}^n(-1)^{n - i} {n \brack i} {i \brace j} &#x3D; [j &#x3D; n]\newline<br>\sum_{i &#x3D; j}^n(-1)^{n - i} {n \brack i} {i \brace j} &#x3D; [j &#x3D; n]\newline<br>\end{align}<br>\right.<br>$$<br>这个公式也被称为反转公式。</p>
+<blockquote>
+<p>证明</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6/" class="print-no-link">#数学</a>
+      
+        <a href="/tags/%E6%95%B0%E8%AE%BA/" class="print-no-link">#数论</a>
+      
+        <a href="/tags/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0/" class="print-no-link">#组合计数</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>斯特林数</div>
+      <div>https://mkurisuqwq.github.io/2024/10/01/斯特林数/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kurisu M</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/01/%E6%95%B0%E8%AE%BA%E5%87%BD%E6%95%B0/" title="数论函数">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数论函数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/01/%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E6%89%A9%E5%B1%95%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86/" title="欧拉定理">
+                        <span class="hidden-mobile">欧拉定理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

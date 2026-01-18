@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kurisu M">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="引言 线段树和平衡树是具有局限性的，但是分块可以通过多样的 trick 处理多样的信息。 —— FDsama  P4168 [Violet] 蒲公英 无修改区间众数， $1\le n \le 40000$，$1\le m \le 50000$，$1\le a_i \le 10^9$。  首先离散化，记 $f_{i,j}$ 为第 $i$ 块到第 $j$ 块的区间众数，$cnt_{i,j}$ 表示前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分块奇妙题">
+<meta property="og:url" content="https://mkurisuqwq.github.io/2024/10/01/%E5%88%86%E5%9D%97%E5%A5%87%E5%A6%99%E9%A2%98/index.html">
+<meta property="og:site_name" content="MKurisuqwq&#39;s Blog">
+<meta property="og:description" content="引言 线段树和平衡树是具有局限性的，但是分块可以通过多样的 trick 处理多样的信息。 —— FDsama  P4168 [Violet] 蒲公英 无修改区间众数， $1\le n \le 40000$，$1\le m \le 50000$，$1\le a_i \le 10^9$。  首先离散化，记 $f_{i,j}$ 为第 $i$ 块到第 $j$ 块的区间众数，$cnt_{i,j}$ 表示前">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mkurisuqwq.github.io/img/13174.png">
+<meta property="article:published_time" content="2024-10-01T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-18T11:15:02.745Z">
+<meta property="article:author" content="Kurisu M">
+<meta property="article:tag" content="分块">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mkurisuqwq.github.io/img/13174.png">
+  
+  
+  
+  <title>分块奇妙题 - MKurisuqwq&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mkurisuqwq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MKurisuqwq&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/86.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="分块奇妙题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-01 12:00" pubdate>
+          2024年10月1日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">分块奇妙题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><blockquote>
+<p>线段树和平衡树是具有局限性的，但是分块可以通过多样的 trick 处理多样的信息。</p>
+<p>—— FDsama</p>
+</blockquote>
+<h2 id="P4168-Violet-蒲公英"><a href="#P4168-Violet-蒲公英" class="headerlink" title="P4168 [Violet] 蒲公英"></a>P4168 [Violet] 蒲公英</h2><blockquote>
+<p>无修改区间众数， $1\le n \le 40000$，$1\le m \le 50000$，$1\le a_i \le 10^9$。</p>
+</blockquote>
+<p>首先离散化，记 $f_{i,j}$ 为第 $i$ 块到第 $j$ 块的区间众数，$cnt_{i,j}$ 表示前 $i$ 块 $j$ 出现的次数，两个可以 $\mathcal{O}(n \sqrt n)$ 预处理。然后我们开一个桶记录散块中每个数字出现的次数。遍历散块，如果发现<strong>某个数字散块中出现的次数 + 整块中出现的次数 &gt; 整块的众数在散块中出现的次数 + 在整块中出现的次数</strong>，就更新答案，因此做到了 $\mathcal{O}(n \sqrt n)$ 预处理 + $\mathcal{O}(\sqrt n)$ 回答询问。</p>
+<h2 id="P5048-Ynoi2019-模拟赛-Yuno-loves-sqrt-technology-III"><a href="#P5048-Ynoi2019-模拟赛-Yuno-loves-sqrt-technology-III" class="headerlink" title="P5048 [Ynoi2019 模拟赛] Yuno loves sqrt technology III"></a>P5048 [Ynoi2019 模拟赛] Yuno loves sqrt technology III</h2><p>我宣布这是 Ynoi 系列最良心分块题！！！</p>
+<blockquote>
+<p>无修改求区间众数出现次数， $1\le n, m, a_i \le 5 \times 10^5$，空间仅够 $O(n)$ 通过。</p>
+</blockquote>
+<p>对每个 $a_i$ 开一个 <code>vector</code>，存储 $a_i$ 每一出现的位置。设 $f_{i, j}$ 表示第 $i$ 块到第 $j$ 块的区间众数出现次数。回答询问时先取整块众数的出现次数 $ans$，遍历散块，以右侧的散块为例：从左至右遍历，对于一个位置 $a_i$，从 <code>vector</code> 里取出它 $a_i$ 前 $ans$ 的位置，对于这个位置，如果它满足 $pos \ge l$，则它在询问区间内出现的次数一定 $&gt; ans$，使 $ans \leftarrow ans + 1$；同时由于我们从左至右遍历，可以做到每次更新 $ans$ 都保证前 $ans$ 的位置满足 $pos \ge l$ 而前 $ans + 1$ 的位置满足 $pos &lt; l$，算法的正确性得以保证。左侧散块同理，但是要注意顺序。</p>
+<p>实际代码只有 52 行，没卡常但最多一个点只跑了 1.46s&#x2F;2.00s。</p>
+<h2 id="P2801-教主的魔法"><a href="#P2801-教主的魔法" class="headerlink" title="P2801 教主的魔法"></a>P2801 教主的魔法</h2><blockquote>
+<p>静态区间求元素排名。</p>
+</blockquote>
+<p>分块，对于每个块排序。查询时整块 <code>lower_bound</code>，散块暴力，复杂度 $\mathcal{O}(n \sqrt n \log \sqrt n)$。</p>
+<p>想要做到更快的复杂度需要套值域分块，学会未来日记之后不难想。</p>
+<h2 id="P4135-作诗"><a href="#P4135-作诗" class="headerlink" title="P4135 作诗"></a>P4135 作诗</h2><blockquote>
+<p>求区间内出现偶数次的元素个数</p>
+</blockquote>
+<p>可以离线的话莫队，但是强制在线。设 $cnt_{i,j}$ 为前 $i$ 块 $j$ 出现次数，$f_{i, j}$ 为 $i \sim j$ 块的答案，经典前缀和 trick + 散块暴力不难。</p>
+<h2 id="P4119-Ynoi2018-未来日记"><a href="#P4119-Ynoi2018-未来日记" class="headerlink" title="P4119 [Ynoi2018] 未来日记"></a>P4119 [Ynoi2018] 未来日记</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1fi4y1P7oj">视频链接</a></p>
+<p>最初分块，经典 trick：分块套值域分块。</p>
+<p>初见容易想到前缀和每个数字出现次数 + 二分。</p>
+<p>但是不行，因为差分到区间内数字出现次数就是 $\mathcal{O}(n \sqrt n)$，乘上二分的 $\log$ 复杂度无法接受。引用题解的话说，主席树之所以可以二分是因为主席树的树形结构先天性的决定了它对二分的适配性，而分块适用于一些更暴力的算法，例如：对值域分块。</p>
+<p>联系到之前的前缀和，我们依然有散块暴力 + 整块 $\mathcal{O}(1)$ 处理的 $\mathcal{O}(\sqrt n)$ 做法。考虑毒瘤的修改。</p>
+<p>发现修改的都是把某一种数合并到另一种数上，这样想到可以把块中相同的数字塞到并查集里。对于每一个块其中的并查集存一个 $rt_{i,j}$，表示第 $i$ 个块数值为 $j$ 的并查集的根。考虑整块的合并，如果 $y$ 所对应的并查集存在，那么 <code>fa[rt[i][x]] = rt[i][y]</code>；如果不存在，那么直接修改 $rt_{i,x}$ 处的值为 $y$，同时 <code>rt[i][y] = rt[i][x], rt[i][x] = 0</code>，这样就相当于把 $x$ 所对应的整棵并查集搬到 $y$ 的位置。接下来考虑散块：直接暴力重构 $x,y$ 所对应的并查集。</p>
+<p>对于并查集完成修改后，我们又发现对于后来的前缀和数组的修改是 $\mathcal{O}(\sqrt n)$ 级别的，可以接受。</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/record/194208675">实际实现</a>：<code>C++ 98 -O2</code>，值域块长 320，序列块长 600，最大一个点 833ms。删去超快读 121 行，Ynoi 里不算多吧。</p>
+<p><img src="/img/13174.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
+<h2 id="P4278-带插入区间K小值"><a href="#P4278-带插入区间K小值" class="headerlink" title="P4278 带插入区间K小值"></a>P4278 带插入区间K小值</h2><p>序列分块+值域分块，每个序列块维护一个链表，保证链表的长度，然后存一个前缀 $cnt$，每次插入依次修改后边块的 $cnt$ 即可，时间复杂度 $O(n \log n)$。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%88%86%E5%9D%97/" class="print-no-link">#分块</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="print-no-link">#数据结构</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>分块奇妙题</div>
+      <div>https://mkurisuqwq.github.io/2024/10/01/分块奇妙题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Kurisu M</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/01/%E5%87%8F%E5%8D%8A%E8%AD%A6%E6%8A%A5%E5%99%A8/" title="减半警报器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">减半警报器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/01/%E6%95%B0%E8%AE%BA%E5%87%BD%E6%95%B0/" title="数论函数">
+                        <span class="hidden-mobile">数论函数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
